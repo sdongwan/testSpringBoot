@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.sdongwan.springboot.mapper.BossXmlMapper">
+
+    <!-- type为实体类Student，包名已经配置，可以直接写类名 -->
+    <resultMap id="bossMap" type="Boss">
+        <id property="bossId" column="bossId"/>
+        <result property="bossName" column="bossName"/>
+        <result property="bossAge" column="bossAge"/>
+    </resultMap>
+
+    <!--开启二级缓存,使用redis作为二级缓存-->
+    <cache type="com.sdongwan.springboot.cache.RedisCache"/>
+
+
+    <select id="findBossByNameByXml" resultMap="bossMap" resultType="Boss" parameterType="String">
+        select * from boss where bossName = #{bossName}
+    </select>
+
+    <insert id="insertBossByXml" parameterType="Boss">
+        insert into boss(bossName,bossAge) values (#{bossName},#{bossAge});
+    </insert>
+
+</mapper>
